@@ -1,0 +1,124 @@
+#creating table for storing customer details 
+create table customer_details(
+    Customer_ID int primary key,
+    Customer_Name varchar(50),
+    City varchar(30),
+    Phone int
+);
+#inserting data
+insert into customer_details values
+(1001,'Arjun','Puducherry',12547),
+(1002,'Banu Priya','Indra nagar',23589),
+(1003,'Riya','Lawspet',78941),
+(1004,'Deva','Rainbow colony',49870),
+(1005,'Sanjay','Rajiv nagar',38521);
+
+select*from customer_details;
+---output---
+Customer_ID|Customer_Name|City|Phone
+1001|Arjun|Puducherry|12547
+1002|Banu Priya|Indra nagar|23589
+1003|Riya|Lawspet|78941
+1004|Deva|Rainbow colony|49870
+1005|Sanjay|Rajiv nagar|38521
+
+#creating table for storing Product details
+create table product_details(
+    Product_ID int primary key,
+    Product_name varchar(30),
+    Price int,
+    Category varchar(50),
+    Customer_ID int
+);
+
+#inserting data
+insert into product_details values
+(010,'Pencil box',200,'Stationery',1001),
+(020,'Chair',500,'Furniture',1002),
+(030,'Face Powder',900,'Cosmetics',1003),
+(040,'Black board',1500,'Stationery',1004),
+(050,'Sofa',5000,'Furniture',1005),
+(060,'Sunscreen',350,'Cosmetics',1006);
+
+select*from product_details;
+---output---
+Product_ID|Product_name|Price|Category|Customer_ID
+10|Pencil box|200|Stationery|1001
+20|Chair|500|Furniture|1002
+30|Face Powder|900|Cosmetics|1003
+40|Black board|1500|Stationery|1004
+50|Sofa|5000|Furniture|1005
+60|Sunscreen|350|Cosmetics|1006
+
+select sum(price) as total_sales from product_details;
+--output--
+total_sales
+8450
+
+#where condition
+select * from customer_details where customer_name='Riya';
+select * from product_details where price>1000;
+select customer_name,phone from customer_details where customer_ID =1003;
+
+--output--
+Customer_ID|Customer_Name|City|Phone
+1003|Riya|Lawspet|78941
+
+Product_ID|Product_name|Price|Category|Customer_ID
+40|Black board|1500|Stationery|1004
+50|Sofa|5000|Furniture|1005
+
+customer_name|phone
+Riya|78941
+
+# group by clause 
+select category,sum(price) as total_category from product_details group by category;
+---output---
+category|total_category
+Stationery|1700
+Furniture|5500
+Cosmetics|1250
+
+#having clause
+select category,avg(price) as avg_price from product_details group by category having avg_price>=500;
+---output---
+category|avg_price
+Stationery|850.0000
+Furniture|2750.0000
+Cosmetics|625.0000
+
+#between
+select product_name,price from product_details where price between 100 and 1000;
+---output---
+product_name|price
+Pencil box|200
+Chair|500
+Face Powder|900
+Sunscreen|350
+
+#in and not in
+select customer_name from customer_details where city in ('Puducherry');
+select phone from customer_details where city in ('Lawspet');
+---output---
+customer_name
+Arjun
+phone
+78941
+
+select product_name,category from product_details where category not in ('Furniture');
+---output---
+product_name|category
+Pencil box|Stationery
+Face Powder|Cosmetics
+Black board|Stationery
+Sunscreen|Cosmetics
+
+#pattern matching
+select customer_name from customer_details where customer_name like '%r%';
+---output---
+customer_name
+Arjun
+Banu Priya
+Riya
+
+
